@@ -1,0 +1,9 @@
+in_event_stream_topic: [
+  "/prophesee/camera1/cd_events_buffer", 
+  "/prophesee/camera2/cd_events_buffer"
+]
+out_event_frame_topic: [  
+  "/prophesee/camera1/cd_events_frame", # <-- follow the same order as above
+  "/prophesee/camera2/cd_events_frame"
+]
+out_frequency: 40 # [Hz]

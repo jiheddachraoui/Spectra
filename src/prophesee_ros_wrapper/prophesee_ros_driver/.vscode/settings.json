@@ -1,0 +1,20 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/user/cerbere/prophesee/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/home/user/cerbere/openeb/build/py3",
+        "/home/user/cerbere/openeb/sdk/modules/core/python/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/ml/python/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/ml/python_extended/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/core_ml/python/pypkg"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/user/cerbere/prophesee/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/home/user/cerbere/openeb/build/py3",
+        "/home/user/cerbere/openeb/sdk/modules/core/python/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/ml/python/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/ml/python_extended/pypkg",
+        "/home/user/cerbere/openeb/sdk/modules/core_ml/python/pypkg"
+    ]
+}

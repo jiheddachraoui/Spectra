@@ -1,0 +1,7 @@
+in_event_stream_topic: [
+  "/prophesee/camera2_slave/cd_events_buffer", 
+  "/prophesee/camera1_master/cd_events_buffer"
+]
+out_frequency: 40 # [Hz]
+output_path_1: "/home/litis/CERBERE/transfered_from_system/bags/frames/cam1/"
+output_path_2: "/home/litis/CERBERE/transfered_from_system/bags/frames/cam2/"

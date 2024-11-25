@@ -1,0 +1,4 @@
+<launch>
+  <rosparam command="load" file="$(find prophesee_ros_driver)/cfg/event_stereo_visualizer_sync.yaml"/>
+  <node pkg="prophesee_ros_driver" type="event_visualizer" name="event_stereo_visualizer_sync" output="screen"/>
+</launch>

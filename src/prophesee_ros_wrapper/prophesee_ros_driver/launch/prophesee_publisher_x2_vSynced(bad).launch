@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="prophesee_ros_driver" name="prophesee_ros_punlisher_master_cam" type="prophesee_ros_punlisher_master_cam.py" output="screen"/>
+  <node pkg="prophesee_ros_driver" name="prophesee_ros_punlisher_slave_cam" type="prophesee_ros_punlisher_slave_cam.py" output="screen"/>
+</launch>
