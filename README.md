@@ -1,3 +1,46 @@
-This work was conducted as part of the ANR CERBERE Project.
+# SPECTRA Dataset & Tools
 
-The CERBERE dataset is focused on driving scenarios and captures data from various sensors, including two stereo event cameras, two global shutter RGB cameras, LIDAR, RTK GPS, and IMU measurements, all of which are synchronized. A key feature of this dataset is the inclusion of the advanced Inertial Navigation System (INS) Atlans A7, which improves the accuracy of pose and position ground truth. Currently, the dataset includes 8 sequences, with additional sequences planned to be recorded under varying lighting conditions.
+This dataset is released as part of the [ANR CERBERE Project](#).
+
+---
+
+## Overview
+
+**SPECTRA** is a multimodal dataset designed for autonomous driving research. It features synchronized sensor data collected in real-world driving conditions, enabling research in:
+
+- Perception  
+- Localization  
+- Sensor fusion  
+- Depth estimation
+
+---
+
+## Sensor Setup
+
+- 📷 **2× Stereo Event Cameras** (Prophesee EVK4)  
+- 📸 **2× Global Shutter RGB Cameras** (Flir Blackfly S)  
+- 🌀 **LiDAR** (Ouster32)  
+- 📍 **RTK GNSS & IMU**  
+- 🎯 **ATLANS A7 INS** — high-precision ground truth for position and orientation  
+
+All sensors are **hardware-synchronized**, including **satellite-based PPS** signals and **external trigger management**.
+
+---
+
+## Dataset Highlights
+
+- ✅ **8 sequences** currently available  
+- 🛣️ Captured in **varied environments and conditions**  
+- 🌤️ More sequences to come (lighting and seasonal variations)
+
+---
+
+## Included Resources
+
+This repository also includes:
+
+- 🔧 **ROS nodes** for synchronizing event cameras (Prophesee master/slave setup)  
+- 🧩 **Post-processing scripts** for data extraction  
+- 🧭 **Ground truth generation tools**   
+- 🌁 **Depth map densification** from sparse LiDAR using semantic segmentation
+

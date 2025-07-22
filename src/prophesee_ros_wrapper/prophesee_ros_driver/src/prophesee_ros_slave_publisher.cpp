@@ -20,6 +20,7 @@
 #include <metavision/hal/device/device_discovery.h>
 #include <metavision/hal/facilities/i_device_control.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
+
 using Image       = sensor_msgs::Image;
 PropheseeWrapperPublisher::PropheseeWrapperPublisher() :
     nh_("~"),
@@ -42,8 +43,10 @@ PropheseeWrapperPublisher::PropheseeWrapperPublisher() :
     pub_info_ = nh_.advertise<sensor_msgs::CameraInfo>(topic_cam_info, 1);
 
     if (publish_cd_)
+        
         pub_cd_events_ = nh_.advertise<prophesee_event_msgs::EventArray>(topic_cd_event_buffer, 500);
         /// \modified by jihed (publisher declaration is added in .h file)
+        pub_slave_ready_ = nh_.advertise<std_msgs::String>("/prophesee/slave_ready", 1, true); //
         pub_event_frame_ = nh_.advertise<Image>(topic_cd_event_frame, 500);
         
         
@@ -82,9 +85,16 @@ bool PropheseeWrapperPublisher::openCamera() {
         if (raw_file_to_read_.empty()) {
             camera_ = Metavision::Camera::from_serial("00050009");
             // set master/slave mode
-            Metavision::I_DeviceControl *i_device_control = camera_.get_device().get_facility<Metavision::I_DeviceControl>();
-            i_device_control->set_mode_slave();
-            std::cout << "\033[94mSet mode Slave successful.\033[0m" << std::endl;
+            //Metavision::I_DeviceControl *i_device_control = camera_.get_device().get_facility<Metavision::I_DeviceControl>();
+            //i_device_control->set_mode_slave();
+            auto device_ctrl = camera_.get_device().get_facility<Metavision::I_DeviceControl>();
+            if (device_ctrl) {
+              device_ctrl->set_mode_slave();
+              std::cout << "\033[94mSet mode Slave successful.\033[0m" << std::endl;
+            } else {
+              ROS_WARN("DeviceControl facility not available — cannot set slave mode.");
+            }
+            
             if (!biases_file_.empty()) {
                 ROS_INFO("[CONF] Loading bias file: %s", biases_file_.c_str());
                 camera_.biases().set_from_file(biases_file_);
@@ -101,8 +111,45 @@ bool PropheseeWrapperPublisher::openCamera() {
 
 void PropheseeWrapperPublisher::startPublishing() {
     camera_.start();
-    start_timestamp_ = ros::Time::now();
+    
+    std_msgs::String ready_msg;
+    ready_msg.data = "Slave is ready";
+    pub_slave_ready_.publish(ready_msg);
+    ROS_INFO("Published slave ready message.");
+    ROS_INFO("Slave started. Waiting for first valid event timestamp (t != 0)...");
+    bool first_event_received = false;
+    Metavision::timestamp first_event_ts = 0;
+
+    // Temporary callback to detect first valid event timestamp
+    Metavision::CallbackId tmp_cb_id = camera_.cd().add_callback(
+        [&first_event_received, &first_event_ts](const Metavision::EventCD* ev_begin, const Metavision::EventCD* ev_end) {
+            for (auto e = ev_begin; e != ev_end; ++e) {
+                if (e->t != 0) {
+                    first_event_received = true;
+                    first_event_ts = e->t;
+                    break;
+                }
+            }
+        });
+
+    // Wait for a valid timestamped event
+    ros::Rate r(100);  // 100 Hz check rate
+    ros::Time ros_now;
+    while (ros::ok() && !first_event_received) {
+        ros_now = ros::Time::now();
+        r.sleep();
+    }
+
+    // Remove temporary callback
+    camera_.cd().remove_callback(tmp_cb_id);
+
+    // Align hardware t=0 with wall clock
+    start_timestamp_ = ros_now - ros::Duration(first_event_ts * 1e-6);  // convert µs to sec
     last_timestamp_  = start_timestamp_;
+
+    ROS_INFO_STREAM("First event with t != 0 received. "
+                    << "t_hw = " << first_event_ts << " µs. "
+                    << "Aligned ROS timestamp base = " << start_timestamp_);
 
     if (publish_cd_)
         publishCDEvents();
@@ -110,7 +157,6 @@ void PropheseeWrapperPublisher::startPublishing() {
     ros::Rate loop_rate(5);
     while (ros::ok()) {
         if (pub_info_.getNumSubscribers() > 0) {
-            /** Get and publish camera info **/
             cam_info_msg_.header.stamp = ros::Time::now();
             pub_info_.publish(cam_info_msg_);
         }

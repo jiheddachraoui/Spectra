@@ -7,10 +7,10 @@ import rosbag
 import numpy as np
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Convert ROS bag to hdf5 for event stream')
+    parser = argparse.ArgumentParser(description='Convert ROS bag to h5 for event stream')
     parser.add_argument('topic', type=str, help='ROS topic for event stream')
     parser.add_argument('input_path', type=str, help='Input ROS bag path')
-    parser.add_argument('output_path', type=str, help='Output HDF5 file path')
+    parser.add_argument('output_path', type=str, help='Output H5 file path')
     args = parser.parse_args()
     
     event_topic = args.topic

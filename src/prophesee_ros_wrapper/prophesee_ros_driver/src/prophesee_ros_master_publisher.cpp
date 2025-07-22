@@ -4,6 +4,10 @@
  * Copyright: (c) 2015-2019 Prophesee                              *
  *******************************************************************/
 
+
+//add trig ready in slave
+
+
 #include <mutex>
 #include <thread>
 
@@ -48,12 +52,13 @@ PropheseeWrapperPublisher::PropheseeWrapperPublisher() :
     
     pub_info_ = nh_.advertise<sensor_msgs::CameraInfo>(topic_cam_info, 1);
 
-    if (publish_cd_)
+    if (publish_cd_){
         pub_cd_events_ = nh_.advertise<prophesee_event_msgs::EventArray>(topic_cd_event_buffer, 500);
         /// \modified by jihed (publisher declaration is added in .h file)
         pub_event_frame_ = nh_.advertise<Image>(topic_cd_event_frame, 500);
         pub_trigger_event_ = nh_.advertise<prophesee_event_msgs::Trigger>("/prophesee/" + camera_name_ +"/trigger_event", 500);
-        
+        slave_ready_sub_ = nh_.subscribe("/prophesee/slave_ready", 1, &PropheseeWrapperPublisher::slaveReadyCallback, this); 
+       } 
 
     while (!openCamera()) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
@@ -80,7 +85,10 @@ PropheseeWrapperPublisher::~PropheseeWrapperPublisher() {
 
     nh_.shutdown();
 }
-
+void PropheseeWrapperPublisher::slaveReadyCallback(const std_msgs::String::ConstPtr &msg) {
+    ROS_INFO("\033[92m[SYNC] Received slave_ready message: %s\033[0m", msg->data.c_str());
+    is_ready_ = true;
+}
 bool PropheseeWrapperPublisher::openCamera() {
     bool camera_is_opened = false;
     
@@ -88,16 +96,26 @@ bool PropheseeWrapperPublisher::openCamera() {
     try {
         if (raw_file_to_read_.empty()) {
             std::cout << "\033[94mwaiting for slave.\033[0m" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(4));
+            //std::this_thread::sleep_for(std::chrono::seconds(4));
             
             camera_ = Metavision::Camera::from_serial("00050008");
             camera_.get_device().get_facility<Metavision::I_TriggerIn>()->enable(0);
-            Metavision::I_DeviceControl *i_device_control = camera_.get_device().get_facility<Metavision::I_DeviceControl>();
-            i_device_control->set_mode_master();
-            std::cout << "\033[94mSet mode Master successful. Remember to start the slave first.\033[0m" << std::endl;
-            
+            //Metavision::I_DeviceControl *i_device_control = camera_.get_device().get_facility<Metavision::I_DeviceControl>();
+            //i_device_control->set_mode_master();
+            if (auto trig_in = camera_.get_device().get_facility<Metavision::I_TriggerIn>()) {
+                trig_in->enable(0);
+                std::cout << "\033[92m[OK] TriggerIn enabled on line 0.\033[0m" << std::endl;
+            } else {
+                std::cerr << "\033[91m[WARN] I_TriggerIn facility not available on this camera.\033[0m" << std::endl;
+            }
 
-
+            // Safely set master mode
+            if (auto dev_ctrl = camera_.get_device().get_facility<Metavision::I_DeviceControl>()) {
+                dev_ctrl->set_mode_master();
+                std::cout << "\033[94m[INFO] Set mode: MASTER — remember to start the slave first.\033[0m" << std::endl;
+            } else {
+                std::cerr << "\033[91m[ERROR] I_DeviceControl facility not available. Cannot set master mode.\033[0m" << std::endl;
+            }
             if (!biases_file_.empty()) {
                 ROS_INFO("[CONF] Loading bias file: %s", biases_file_.c_str());
                 camera_.biases().set_from_file(biases_file_);
@@ -113,8 +131,18 @@ bool PropheseeWrapperPublisher::openCamera() {
 }
 
 void PropheseeWrapperPublisher::startPublishing() {
+    ROS_INFO("\033[94m[SYNC] Waiting for /prophesee/slave_ready topic...\033[0m");
+    ros::Rate rate(10);
+    while (ros::ok() && !is_ready_) {
+      ros::spinOnce();
+      rate.sleep();
+    }
+
+    ROS_INFO("\033[94m[SYNC] Slave is ready. Starting camera now.\033[0m");
+
     camera_.start();
-    start_timestamp_ = ros::Time::now();
+    std::cout << "\033[94m[INFO] Mastet started waiting for external trigger.\033[0m" << std::endl;
+    start_timestamp_ = ros::Time(0);
     last_timestamp_  = start_timestamp_;
 
     if (publish_cd_)
@@ -134,6 +162,36 @@ void PropheseeWrapperPublisher::startPublishing() {
 void PropheseeWrapperPublisher::publishCDEvents() {
     // Initialize and publish a buffer of CD events
     try {
+        Metavision::I_EventDecoder<Metavision::EventExtTrigger> *i_triggerdecoder =
+            camera_.get_device().get_facility<Metavision::I_EventDecoder<Metavision::EventExtTrigger>>();
+            if (i_triggerdecoder) {
+           
+            
+            i_triggerdecoder->add_event_buffer_callback(
+                [this](const Metavision::EventExtTrigger *begin, const Metavision::EventExtTrigger *end) {
+                
+                ROS_INFO_ONCE("\033[92mThere is an external trigger!!!!\033[0m");
+                for (auto tg = begin; tg != end; ++tg) {
+                	 if (start_timestamp_.isZero()) {
+                	   start_timestamp_ = ros::Time::now() - ros::Duration(tg->t * 1e-6); // tg->t is in µs
+                          ROS_INFO("\033[94mStart timestamp synchronized using first external trigger.\033[0m");
+                          }
+                        // Create a Trigger message
+                        prophesee_event_msgs::Trigger trg_msg;
+                        trg_msg.header.stamp = ros::Time::now(); // Set the header timestamp
+                        trg_msg.header.frame_id = tg->id;
+                        //trg_msg.ts = tg->t; // Set the timestamp from the event
+                        trg_msg.ts = start_timestamp_.toNSec() + static_cast<uint64_t>(tg->t * 1000.0);
+
+                        trg_msg.polarity = tg->p; // Set the polarity from the event (assuming p is a boolean, adjust if necessary)
+			
+                        
+                        
+                        pub_trigger_event_.publish(trg_msg);
+                        trg_msg = prophesee_event_msgs::Trigger();
+                    }
+            });
+            }
         Metavision::CallbackId cd_callback =
             camera_.cd().add_callback([this](const Metavision::EventCD *ev_begin, const Metavision::EventCD *ev_end) {
                 // Check the number of subscribers to the topic
@@ -204,34 +262,7 @@ void PropheseeWrapperPublisher::publishCDEvents() {
                 }
 
             });
-            Metavision::I_EventDecoder<Metavision::EventExtTrigger> *i_triggerdecoder =
-            camera_.get_device().get_facility<Metavision::I_EventDecoder<Metavision::EventExtTrigger>>();
-            if (i_triggerdecoder) {
-           
             
-            i_triggerdecoder->add_event_buffer_callback(
-                [this](const Metavision::EventExtTrigger *begin, const Metavision::EventExtTrigger *end) {
-                
-                ROS_INFO_ONCE("\033[92mThere is an external trigger!!!!\033[0m");
-                for (auto tg = begin; tg != end; ++tg) {
-                	 
-                        // Create a Trigger message
-                        prophesee_event_msgs::Trigger trg_msg;
-                        trg_msg.header.stamp = ros::Time::now(); // Set the header timestamp
-                        trg_msg.header.frame_id = tg->id;
-                        //trg_msg.ts = tg->t; // Set the timestamp from the event
-                        trg_msg.ts = start_timestamp_.toNSec() + static_cast<uint64_t>(tg->t * 1000.0);
-
-                        trg_msg.polarity = tg->p; // Set the polarity from the event (assuming p is a boolean, adjust if necessary)
-			
-                        
-                        
-                        pub_trigger_event_.publish(trg_msg);
-                        trg_msg = prophesee_event_msgs::Trigger();
-                    }
-            });
-            
-}
     
         
   
