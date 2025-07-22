@@ -1,6 +1,7 @@
 import numpy as np
 import open3d as o3d
 import cv2
+import os
 from scipy.spatial.transform import Rotation as R
 
 def read_imu_file(file_path):
@@ -15,17 +16,35 @@ def read_imu_file(file_path):
                 imu_data.append([float(v) for v in values])
     return np.array(imu_data)
 
-# Transformation matrix: IMU to Camera (given alignment)
-T_imu_to_camera = np.array([
-    [-0.0307069, -0.999519, -0.00424704, 0.259398],
-    [-0.0640017,  0.00620653, -0.99793,  -0.066651],
-    [0.997477, -0.0303716, -0.0641616,  -0.0345687],
-    [0, 0, 0, 1]
+# Transformation matrix: Lidar to Camera (given alignment)
+T_imu_to_camera= np.array([
+    [-0.02561535, -0.99958868, -0.01287125,  0.20361100],
+    [-0.06779258,  0.01458285, -0.99759266, -0.05446648],
+    [ 0.99737086, -0.02468116, -0.06813827,  0.20798620],
+    [ 0.00000000,  0.00000000,  0.00000000,  1.00000000]
 ])
 
+"""T_imu_to_camera = np.array([
+    [-0.02561535, -0.99958868, -0.01287125,  0.24361100],
+    [-0.06779258,  0.01458285, -0.99759266,  -0.05446648],
+    [ 0.99737086, -0.02468116, -0.06813827,  -0.04201380],
+    [ 0.00000000,  0.00000000,  0.00000000,  1.00000000]
+])"""
+
+'''T_imu_to_camera = np.array([
+   [-0.03871, -0.99922, -0.00802,  0.19196],
+    [-0.05322,  0.01024, -0.99853, -0.06529],
+    [ 0.99783, -0.03813, -0.05350, -0.34737],
+    [ 0,        0,        0,        1     ]
+])'''
+
 # File paths
-imu_file_path = "traj.txt"
+imu_file_path = "interp_traj.txt"
 pcd_file_path = "scans.pcd"
+
+# Output directories
+os.makedirs("./res", exist_ok=True)
+os.makedirs("./res_npy", exist_ok=True)
 
 # Load IMU trajectory
 imu_data = read_imu_file(imu_file_path)
@@ -108,6 +127,21 @@ for idx, imu_entry in enumerate(imu_data):
 
     # Apply colormap and save depth map
     depth_map_colored = cv2.applyColorMap(normalized_depth_map, cv2.COLORMAP_INFERNO)
-    output_filename = f"depth_map_{timestamp:.3f}.png"
+    output_filename = f"./res/depth_map_{idx}.png"
     cv2.imwrite(output_filename, depth_map_colored)
     print(f"Saved: {output_filename}")
+
+    
+    # Save raw depth (before normalization), preserving NaNs
+    raw_depth_map = np.full((image_height, image_width), np.inf)
+    np.minimum.at(raw_depth_map, (v_valid, u_valid), z_valid)
+    raw_depth_map[raw_depth_map == np.inf] = np.nan
+    np.save(f"./res_npy/depth_map_{idx}.npy", raw_depth_map.astype(np.float32))
+    print(f"Saved: ./res_npy/depth_map_{idx}.npy")
+
+    # Save 16-bit PNG (depth in millimeters), NaNs → 0
+    depth_mm = raw_depth_map.copy()
+    depth_mm[np.isnan(depth_mm)] = 0
+    depth_mm = (depth_mm * 1000.0).astype(np.uint16)
+    cv2.imwrite(f"./res_npy/depth_map_{idx}.png", depth_mm)
+    print(f"Saved: ./res_npy/depth_map_{idx}.png")

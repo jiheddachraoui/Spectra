@@ -8,7 +8,7 @@
 #define PROPHESEE_ROS_PUBLISHER_H_
 
 #include <sensor_msgs/CameraInfo.h>
-
+#include <std_srvs/Trigger.h>
 #include <metavision/sdk/driver/camera.h>
 
 /// \brief Main class for ROS publisher
@@ -24,7 +24,8 @@ public:
 
     /// \brief Starts the camera and starts publishing data
     void startPublishing();
-
+    void slaveReadyCallback(const std_msgs::String::ConstPtr &msg);
+    
 private:
     /// \brief Opens the camera
     bool openCamera();
@@ -34,7 +35,7 @@ private:
 
     /// \brief Node handler - the access point to communication with ROS
     ros::NodeHandle nh_;
-
+ 
     /// \brief Publisher for camera info
     ros::Publisher pub_info_;
 
@@ -44,6 +45,15 @@ private:
     /// \modified by jihed
     ros::Publisher pub_trigger_event_;
     ros::Publisher pub_event_frame_;
+    ros::Publisher pub_slave_ready_;
+    ros::ServiceServer ready_service_;
+    bool is_ready_ = false;
+    ros::NodeHandle global_nh;
+    ros::Subscriber slave_ready_sub_;
+    
+    
+
+
     
     /// \brief Instance of Camera class
     ///
@@ -69,14 +79,14 @@ private:
 
     /// \brief Wall time stamps
     ros::Time start_timestamp_, last_timestamp_;
-     
+
+    /// \brief If showing CD events
+    bool publish_cd_;
+    
     //Jihed
     bool erc_enabled_;  // Declare here
     int target_event_rate_;  // Declare here 
     
-    /// \brief If showing CD events
-    bool publish_cd_;
-
     /// \brief Activity Filter Temporal depth (configuration)
     /// Desirable Temporal depth in micro seconds
     int activity_filter_temporal_depth_;
