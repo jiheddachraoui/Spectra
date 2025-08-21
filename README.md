@@ -30,10 +30,22 @@ All sensors are **hardware-synchronized**, including **satellite-based PPS** sig
 The sections below are a step-by-step guide to recreate these ground truths from your own ROS bag, using the scripts provided in this repo.
 
 ## ROS bag contents
+| Topic                                        | Type                              | Description               |
+| -------------------------------------------- | --------------------------------- | ------------------------- |
+| `/ixblue_ins_driver/ix/ins`                  | `ixblue_ins_msgs/Ins`             | Navigation solution (INS) |
+| `/ixblue_ins_driver/standard/imu`            | `sensor_msgs/Imu`                 | IMU (INS unit)            |
+| `/ixblue_ins_driver/standard/navsatfix`      | `sensor_msgs/NavSatFix`           | GNSS fix (RTK)            |
+| `/ixblue_ins_driver/standard/timereference`  | `sensor_msgs/TimeReference`       | GNSS time reference       |
+| `/ouster/imu`                                | `sensor_msgs/Imu`                 | IMU (LiDAR unit)          |
+| `/ouster/points`                             | `sensor_msgs/PointCloud2`         | 3D LiDAR point cloud      |
+| `/prophesee/camera1_master/cd_events_buffer` | `prophesee_event_msgs/EventArray` | Left event stream         |
+| `/prophesee/camera1_master/trigger_event`    | `prophesee_event_msgs/Trigger`    | Left trigger events       |
+| `/prophesee/camera2_slave/cd_events_buffer`  | `prophesee_event_msgs/EventArray` | Right event stream        |
+| `/stereo/left/image_color`                   | `sensor_msgs/Image`               | Left RGB image            |
+| `/stereo/right/image_color`                  | `sensor_msgs/Image`               | Right RGB image           |
+| `/synchrobox_msg`                            | `std_msgs/String`                 | Sync box status           |
+| `/synchrobox_pin0`                           | `std_msgs/Int64MultiArray`        | Sync box digital pin data |
 
-- ✅ **8 sequences** currently available
-- 🛣️ Captured in **varied environments and conditions**
-- 🌤️ More sequences to come (lighting and seasonal variations)
 
 ---
 
