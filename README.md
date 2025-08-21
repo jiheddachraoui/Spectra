@@ -49,6 +49,9 @@ The sections below are a step-by-step guide to recreate these ground truths from
 
 ---
 
+Run `rosbag info your.bag` to inspect topics.
+
+
 ## Included Resources
 
 This repository also includes:
