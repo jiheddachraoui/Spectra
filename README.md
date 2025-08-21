@@ -161,7 +161,15 @@ Then, in another terminal, launch Faster-LIO:
 ```bash
 roslaunch faster_lio mapping_ouster32.launch
 ```
-The output files will be saved in faster-lio/results.
+The output files will be saved in faster-lio/results, and tehre will be a .txt file for the trajectory coordinates and a scan?pcd for the Lidar Poincloud
+
+The POincloud can be visualized as follow: 
+
+```bash
+
+pcl_viewer scans.pcd 
+
+```
 
 
 
