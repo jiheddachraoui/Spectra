@@ -8,7 +8,7 @@ This dataset is released as part of the [ANR CERBERE Project](#).
   <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
 </p>
 ---
-## Overview
+
 
 **SPECTRA** is a multimodal dataset designed for autonomous driving research. It features synchronized sensor data collected in real-world driving conditions, enabling research in:
 
@@ -17,7 +17,6 @@ This dataset is released as part of the [ANR CERBERE Project](#).
 - Sensor fusion
 - Depth estimation
 
----
 
 ## Sensor Setup
 
