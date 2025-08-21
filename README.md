@@ -167,7 +167,7 @@ The Pointcloud can be visualized as follow:
 
 
 <p align="center">
-  <img src="docs/media/fasterlio4.png" alt="SPECTRA system overview" width="500">
+  <img src="docs/media/fasterlio4.png" alt="SPECTRA system overview" width="400">
   <br>
   <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
 </p>
@@ -180,7 +180,7 @@ pcl_viewer scans.pcd
 
 ```
 <p align="center">
-  <img src="docs/media/fasterlio4.png" alt="SPECTRA system overview" width="860">
+  <img src="docs/media/suburbs_day_pcd.png" alt="SPECTRA system overview" width="400">
   <br>
   <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
 </p>
