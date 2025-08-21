@@ -63,10 +63,47 @@ Update only the variables at the top to match your setup.
 python scripts/rosbag/bag_to_video.py data/raw/<your_sequence>.bag
 
 ```
+The ouput is a video .avi with teh same name of the Rosbag. If you wish to extract teh frames from the videos with no loss 
+ you can follow thsi snippet : 
 
-Expected Output
+ ```bash
+# --- edit these variables ---
+VID="data/raw/sequence01.stereo_rgb.avi"   # input stereo video (left|right are side-by-side)
+START="00:00:36.000"                       # start timestamp (HH:MM:SS.mmm)
+END="00:00:37.000"                         # end timestamp (HH:MM:SS.mmm)  (or use DUR below)
+# DUR="1.000"                              # duration in seconds, alternative to END
+SIDE="left"                                # left | right
+OUT_DIR="data/processed/seq01/frames_left" # output folder
+FPS=""                                     # e.g., 30 to decimate; leave empty for all frames
+# -----------------------------------------
 
-Total messages in the topics: 137734
-Processing frames: 100%|████████████████████████████| 68867/68867
-Combined video saved to data/raw/sequence01.stereo_rgb.avi
+mkdir -p "$OUT_DIR"
+
+# Choose crop filter based on SIDE
+if [ "$SIDE" = "left" ]; then
+  CROP="crop=iw/2:ih:0:0"
+else
+  CROP="crop=iw/2:ih:iw/2:0"
+fi
+
+# Optional FPS filter
+if [ -n "$FPS" ]; then
+  VF="$CROP,fps=$FPS"
+else
+  VF="$CROP"
+fi
+
+# Extract using START..END (accurate seek). For START..DUR, see the alt command below.
+ffmpeg -hide_banner -loglevel error \
+  -i "$VID" -ss "$START" -to "$END" \
+  -vf "$VF" -vsync 0 -frame_pts 1 \
+  "$OUT_DIR/${SIDE}_%010d.png"
+
+# --- Alternative: START + duration (fast seek) ---
+# ffmpeg -hide_banner -loglevel error \
+#   -ss "$START" -i "$VID" -t "${DUR:-1.0}" \
+#   -vf "$VF" -vsync 0 -frame_pts 1 \
+#   "$OUT_DIR/${SIDE}_%010d.png"
+
+``` 
 
