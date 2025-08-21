@@ -143,6 +143,12 @@ Extract trigger timestamps into a text file
 ```bash
 python3 scripts/rosbag/extract_timestamp.py data/raw/sequence01.bag
 ```
+
+<p align="center">
+  <img src="docs/media/demo_small_event.gif" alt="SPECTRA demo" width="860">
+  <br>
+  <em>Figure — Stereo Event preview.</em>
+</p>
 ## Step 3 — Extract the Lidar pointcloud .pcd and the trajectory .txt with FasterLIo
 We used **Faster-LIO** ([GitHub link](https://github.com/gaoxiang12/faster-lio)). The code has been copied into `src/faster-lio`. You can either follow their GitHub instructions for installation or simply copy this folder into a catkin workspace and build it.  
 
