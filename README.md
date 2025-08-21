@@ -27,9 +27,9 @@ This dataset is released as part of the [ANR CERBERE Project](#).
 
 All sensors are **hardware-synchronized**, including **satellite-based PPS** signals and **external trigger management**.
 
----
+The sections below are a step-by-step guide to recreate these ground truths from your own ROS bag, using the scripts provided in this repo.
 
-## Dataset Ground Truths
+## ROS bag contents
 
 - ✅ **8 sequences** currently available
 - 🛣️ Captured in **varied environments and conditions**
