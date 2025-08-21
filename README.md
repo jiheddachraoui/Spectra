@@ -1,6 +1,5 @@
 
-# SPECTRA Dataset & Tools
-
+# SPECTRA Dataset: Sensor and  Ground-Truth Toolkit
 This dataset is released as part of the [ANR CERBERE Project](#).
 
 ---
