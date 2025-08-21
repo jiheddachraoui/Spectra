@@ -1,6 +1,6 @@
 # SPECTRA Dataset: Sensor and  Ground-Truth Toolkit
 
-This dataset is released as part of the #[ANR CERBERE Project](https://litis-cerbere.univ-rouen.fr/index.html).
+This dataset is released as part of the [ANR CERBERE Project](https://litis-cerbere.univ-rouen.fr/index.html).
 
 <p align="center">
   <img src="docs/media/sensor_system.png" alt="SPECTRA system overview" width="860">
