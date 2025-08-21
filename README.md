@@ -52,7 +52,7 @@ The sections below are a step-by-step guide to recreate these ground truths from
 rosbag info </path/toyourrosbag.bag> 
 
 ```
-## Included Resources
+## RGB Frames Extraction and Video Visualization
 
 This repository also includes:
 
