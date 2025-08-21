@@ -49,7 +49,7 @@ The sections below are a step-by-step guide to recreate these ground truths from
 
 ---
 ```bash
-rosbag info <your.bag> 
+rosbag info </path/toyourrosbag.bag> 
 
 ```
 ## Included Resources
