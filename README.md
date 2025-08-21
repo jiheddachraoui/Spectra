@@ -127,6 +127,16 @@ python scripts/rosbag/2event_to_hdf5.py \
   data/raw/sequence01.bag \
   data/processed/seq01/events.h5
 ```
+To convert each event topic separately into its own compressed HDF5 file:
+
+```bash
+python3 scripts/rosbag/event_topic_to_h5.py /prophesee/camera1_master/cd_events_buffer data/raw/sequence01.bag data/processed/seq01.left.h5
+python3 scripts/rosbag/event_topic_to_h5.py /prophesee/camera2_slave/cd_events_buffer data/raw/sequence01.bag data/processed/seq01.right.h5
+```
+Extract trigger timestamps into a text file
+```bash
+python3 scripts/rosbag/extract_timestamp.py data/raw/sequence01.bag
+
 ## Step 3 — Extract the Lidar pointcloud .pcd and the trajectory .txt with FasterLIo
 
 
