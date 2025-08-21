@@ -105,5 +105,18 @@ ffmpeg -hide_banner -loglevel error \
 #   -vf "$VF" -vsync 0 -frame_pts 1 \
 #   "$OUT_DIR/${SIDE}_%010d.png"
 
-``` 
 
+
+```
+## Step 2 — Extract Event Frames (Left & Right) & .h5 files
+
+To visualize the events in a video format run this in your bash: 
+
+``` bash
+python scripts/rosbag/bag_to_video_event_optimized.py \
+  data/raw/sequence01.bag \
+  /prophesee/camera1_master/cd_events_buffer \
+  /prophesee/camera2_slave/cd_events_buffer \
+  data/processed/seq01/previews \
+  --fps 30
+```
