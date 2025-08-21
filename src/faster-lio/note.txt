@@ -1,0 +1,7 @@
+inside faster leo path 
+
+./../../devel/lib/faster_lio/run_mapping_offline --bag_file /home/litis/CERBERE/transfered_from_system/bags/rosbag_main_vSynced_2024-10-24-08-43-49.bag --config_file ./config/ouster32.yaml
+
+
+live mode better : roslaunch faster_lio mapping_ouster32.launch 
+
