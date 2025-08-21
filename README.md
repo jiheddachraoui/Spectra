@@ -163,14 +163,8 @@ roslaunch faster_lio mapping_ouster32.launch
 ```
 The output files will be saved in faster-lio/results, and tehre will be a .txt file for the trajectory coordinates and a scan?pcd for the Lidar Poincloud
 
+
 The Pointcloud can be visualized as follow: 
-
-
-<p align="center">
-  <img src="docs/media/fasterlio4.png" alt="SPECTRA system overview" width="400">
-  <br>
-  <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
-</p>
 
 ```bash
 
@@ -180,7 +174,7 @@ pcl_viewer scans.pcd
 
 ```
 <p align="center">
-  <img src="docs/media/suburbs_day_pcd.png" alt="SPECTRA system overview" width="400">
+  <img src="docs/media/suburbs_day_pcd.png" alt="SPECTRA system overview" width="500">
   <br>
   <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
 </p>
