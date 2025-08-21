@@ -120,3 +120,12 @@ python scripts/rosbag/bag_to_video_event_optimized.py \
   data/processed/seq01/previews \
   --fps 30
 ```
+Convert the two Prophesee event topics (and triggers) from a ROS bag into a compressed HDF5 file.
+
+```bash
+python scripts/rosbag/2event_to_hdf5.py \
+  data/raw/sequence01.bag \
+  data/processed/seq01/events.h5
+```
+
+
