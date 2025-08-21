@@ -24,5 +24,6 @@
         "/home/litis/SuperGluePretrainedNetwork",
         "/home/litis/catkin_ws/src/direct_visual_lidar_calibration/SuperGluePretrainedNetwork",
         "/home/litis/SuperGluePretrainedNetwork"
-    ]
+    ],
+    "cmake.ignoreCMakeListsMissing": true
 }
