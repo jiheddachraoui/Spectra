@@ -111,7 +111,7 @@ ffmpeg -hide_banner -loglevel error \
 <p align="center">
   <img src="docs/media/demo_small.gif" alt="SPECTRA demo" width="860">
   <br>
-  <em>Figure — Stereo RGB + events preview.</em>
+  <em>Figure — Stereo RGB  preview.</em>
 </p>
 
 ## Step 2 — Extract Event Frames (Left & Right) & .h5 files
