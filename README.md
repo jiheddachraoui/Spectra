@@ -52,11 +52,46 @@ The sections below are a step-by-step guide to recreate these ground truths from
 rosbag info </path/toyourrosbag.bag> 
 
 ```
-## RGB Frames Extraction and Video Visualization
 
-This repository also includes:
+## Step 1 — Extract RGB Frames (Left & Right)
 
-- 🔧 **ROS nodes** for synchronizing event cameras (Prophesee master/slave setup)
-- 🧩 **Post-processing scripts** for data extraction
-- 🧭 **Ground truth generation tools**
-- 🌁 **Depth map densification** from sparse LiDAR using semantic segmentation
+Use the snippet below to extract PNG frames and timestamps from your bag.  
+Update only the variables at the top to match your setup.
+
+```bash
+#!/usr/bin/env bash
+# Extract RGB frames from a SPECTRA rosbag
+# Works with ROS1 .bag or ROS2 bag directory (set BAG accordingly)
+
+set -euo pipefail
+
+# --- EDIT THESE ---
+BAG="data/raw/<your_rosbag>.bag"             # ROS1: .bag file, ROS2: set to bag directory
+OUT="data/processed/<sequence_id>"           # e.g., data/processed/seq01
+TOPIC_LEFT="/stereo/left/image_color"        # change if your topic names differ
+TOPIC_RIGHT="/stereo/right/image_color"
+FPS=30                                       # set 0 to keep all frames (no decimation)
+# ---------------
+
+mkdir -p "$OUT/images_left" "$OUT/images_right"
+
+echo "[RGB] Extracting LEFT frames from $TOPIC_LEFT …"
+python scripts/02_extract_frames.py \
+  --bag  "$BAG" \
+  --topic "$TOPIC_LEFT" \
+  --out  "$OUT/images_left" \
+  --rate "$FPS"
+
+echo "[RGB] Extracting RIGHT frames from $TOPIC_RIGHT …"
+python scripts/02_extract_frames.py \
+  --bag  "$BAG" \
+  --topic "$TOPIC_RIGHT" \
+  --out  "$OUT/images_right" \
+  --rate "$FPS"
+
+echo "[RGB] Done. Outputs:"
+echo "  - $OUT/images_left/*.png"
+echo "  - $OUT/images_left/timestamps.txt"
+echo "  - $OUT/images_right/*.png"
+echo "  - $OUT/images_right/timestamps.txt"
+
