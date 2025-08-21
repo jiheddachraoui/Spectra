@@ -49,7 +49,7 @@ The sections below are a step-by-step guide to recreate these ground truths from
 
 ---
 ```bash
-Run `rosbag info your.bag` to inspect topics.
+rosbag info <your.bag> 
 
 ```
 ## Included Resources
