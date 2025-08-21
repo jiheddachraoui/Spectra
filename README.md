@@ -136,7 +136,23 @@ python3 scripts/rosbag/event_topic_to_h5.py /prophesee/camera2_slave/cd_events_b
 Extract trigger timestamps into a text file
 ```bash
 python3 scripts/rosbag/extract_timestamp.py data/raw/sequence01.bag
-
+```
 ## Step 3 — Extract the Lidar pointcloud .pcd and the trajectory .txt with FasterLIo
+We used **Faster-LIO** ([GitHub link](https://github.com/gaoxiang12/faster-lio)). The code has been copied into `src/faster-lio`. You can either follow their GitHub instructions for installation or simply copy this folder into a catkin workspace and build it.  
+
+To generate the `.pcd` and `.txt` files, first play the ROS bag in one terminal:
+
+```bash
+rosbag play data/raw/sequence01.bag
+
+Then, in another terminal, launch Faster-LIO:
+
+roslaunch faster_lio mapping_ouster32.launch
+```
+The output files will be saved in faster-lio/results.
+
+
+If you want, I can also **add a neat R Markdown section header and bullet points** so it looks more like proper documentation. Do you want me to do that?
+
 
 
