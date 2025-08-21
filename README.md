@@ -144,9 +144,9 @@ To generate the `.pcd` and `.txt` files, first play the ROS bag in one terminal:
 
 ```bash
 rosbag play data/raw/sequence01.bag
-
+```
 Then, in another terminal, launch Faster-LIO:
-
+```bash
 roslaunch faster_lio mapping_ouster32.launch
 ```
 The output files will be saved in faster-lio/results.
