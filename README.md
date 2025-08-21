@@ -3,7 +3,7 @@
 This dataset is released as part of the [ANR CERBERE Project](#).
 
 <p align="center">
-  <img src="docs/media/system-overview.pdf" alt="SPECTRA system overview" width="860">
+  <img src="docs/media/system-overview.png" alt="SPECTRA system overview" width="860">
   <br>
   <em>Figure 1 — The SPECTRA pipeline and sensor suite used to produce ground truths.</em>
 </p>
