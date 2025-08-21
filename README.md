@@ -5,7 +5,7 @@ This dataset is released as part of the [ANR CERBERE Project](#).
 <p align="center">
   <img src="docs/media/sensor_system.png" alt="SPECTRA system overview" width="860">
   <br>
-  <em>Figure 1 — The SPECTRA sesnor system used for the data aquisition.</em>
+  <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
 </p>
 ---
 ## Overview
