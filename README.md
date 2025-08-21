@@ -105,13 +105,15 @@ ffmpeg -hide_banner -loglevel error \
 #   -vf "$VF" -vsync 0 -frame_pts 1 \
 #   "$OUT_DIR/${SIDE}_%010d.png"
 
+
+
+```
 <p align="center">
   <img src="docs/media/demo_small.gif" alt="SPECTRA demo" width="860">
   <br>
   <em>Figure — Stereo RGB + events preview.</em>
 </p>
 
-```
 ## Step 2 — Extract Event Frames (Left & Right) & .h5 files
 
 To visualize the events in a video format run this in your bash: 
