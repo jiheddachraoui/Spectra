@@ -1,7 +1,11 @@
 
 # SPECTRA Dataset: Sensor and  Ground-Truth Toolkit
 This dataset is released as part of the [ANR CERBERE Project](#).
-
+<p align="center">
+  <img src="system-overview.pdf" alt="SPECTRA system overview" width="860">
+  <br>
+  <em>Figure 1 — The SPECTRA pipeline and sensor suite used to produce ground truths.</em>
+</p>
 ---
 hgjhgjhgjh
 ## Overview
