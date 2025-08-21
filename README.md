@@ -176,7 +176,7 @@ pcl_viewer scans.pcd
 <p align="center">
   <img src="docs/media/suburbs_day_pcd.png" alt="SPECTRA system overview" width="500">
   <br>
-  <em>Figure 1 — The SPECTRA sensor system used for the data aquisition.</em>
+  <em>Figure 1 — The sequence day_suburbs_01  Lidar poincloud.</em>
 </p>
 
 
