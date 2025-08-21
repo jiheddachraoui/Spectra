@@ -158,7 +158,5 @@ roslaunch faster_lio mapping_ouster32.launch
 The output files will be saved in faster-lio/results.
 
 
-If you want, I can also **add a neat R Markdown section header and bullet points** so it looks more like proper documentation. Do you want me to do that?
-
 
 
