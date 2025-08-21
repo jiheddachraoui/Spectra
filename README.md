@@ -149,6 +149,7 @@ python3 scripts/rosbag/extract_timestamp.py data/raw/sequence01.bag
   <br>
   <em>Figure — Stereo Event preview.</em>
 </p>
+
 ## Step 3 — Extract the Lidar pointcloud .pcd and the trajectory .txt with FasterLIo
 We used **Faster-LIO** ([GitHub link](https://github.com/gaoxiang12/faster-lio)). The code has been copied into `src/faster-lio`. You can either follow their GitHub instructions for installation or simply copy this folder into a catkin workspace and build it.  
 
@@ -161,7 +162,7 @@ Then, in another terminal, launch Faster-LIO:
 ```bash
 roslaunch faster_lio mapping_ouster32.launch
 ```
-The output files will be saved in faster-lio/results, and tehre will be a .txt file for the trajectory coordinates and a scan?pcd for the Lidar Poincloud
+The output files will be saved in faster-lio/results, and tehre will be a .txt file for the trajectory coordinates and a scan.pcd for the Lidar Poincloud
 
 
 The Pointcloud can be visualized as follow: 
@@ -178,6 +179,9 @@ pcl_viewer scans.pcd
   <br>
   <em>Figure 1 — The sequence day_suburbs_01  Lidar poincloud.</em>
 </p>
+
+## Step 4 — Depth Maps extraction from the lidar poincloud on the left event camera frame
+
 
 
 
