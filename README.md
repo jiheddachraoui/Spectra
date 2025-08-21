@@ -127,5 +127,6 @@ python scripts/rosbag/2event_to_hdf5.py \
   data/raw/sequence01.bag \
   data/processed/seq01/events.h5
 ```
+## Step 3 — Extract the Lidar pointcloud .pcd and the trajectory .txt with FasterLIo
 
 
