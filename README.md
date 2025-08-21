@@ -62,7 +62,10 @@ Update only the variables at the top to match your setup.
 # Default usage (topics & fps are fixed inside the script)
 python scripts/rosbag/bag_to_video.py data/raw/<your_sequence>.bag
 
+```
+
 Expected Output
+
 Total messages in the topics: 137734
 Processing frames: 100%|████████████████████████████| 68867/68867
 Combined video saved to data/raw/sequence01.stereo_rgb.avi
