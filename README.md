@@ -191,11 +191,11 @@ python scripts/depth_map/depth_map_projection.py
 
 At the top of teh script you should mention the paths to: 
 
-imu_file_path, pcd_file_path, rgb_image_dir
+`imu_file_path`, `pcd_file_path`, `rgb_image_dir`
 
-Camera intrinsics K and image size image_width, image_height
+Camera intrinsics `K` and image size `image_width`, `image_height`
 
-Initial IMU→Camera matrix T_imu_to_camera_init
+Initial IMU→Camera matrix `T_imu_to_camera_init`
 
 Search radius for map points (default 75 m)
 
