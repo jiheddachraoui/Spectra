@@ -181,7 +181,22 @@ pcl_viewer scans.pcd
 </p>
 
 ## Step 4 — Depth Maps extraction from the lidar poincloud on the left event camera frame
+```bash
 
+python scripts/depth_map/depth_map_projection.py
 
+```
+
+ It projects a global LiDAR point cloud onto time-aligned RGB frames using IMU poses, so you can visually fine-tune the IMU→Camera extrinsics (small rotations/translations) and instantly see the effect. Points are depth-colored and overlaid on the nearest image in time with also a control over the calibration rotation and translation to tweak the calibration values if the calibration is not as accurate as it shoould be. 
+
+At the top of teh script you should mention the paths to: 
+
+imu_file_path, pcd_file_path, rgb_image_dir
+
+Camera intrinsics K and image size image_width, image_height
+
+Initial IMU→Camera matrix T_imu_to_camera_init
+
+Search radius for map points (default 75 m)
 
 
