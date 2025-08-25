@@ -208,12 +208,12 @@ Search radius for map points (default 75 m)
 
 ## Step 5 — Semantic Segmentation
 
-IN our SPECTRA Dataset, we consider semantic segmentation as a double 
+IN our SPECTRA Dataset, we consider semantic segmentation as a double usage annotation, that can be used to train models on **semantic segmentation using event data**, but it is also used to generate **pseudo ground truths** for learning-models in depth estimation, bu creating dense depth maps and label-aware diffusion of Lidar data. 
 
+We implemented a version of **DeeplabV3+** trained and finetuned on the CityScapes Dataset. 
 
 ## Step 6  Depth Map Densification using Semantic Segmentation
 
-A Python implementation for densifying sparse LiDAR depth maps using semantic segmentation guidance.
 
 
 The system uses a **semantic-aware pipeline** that combines:
@@ -234,3 +234,4 @@ project_directory/
 ├── res/depth_map_68.png        # Colored depth image (inferno colormap)
 ├── res_npy/depth_map_68.npy    # Raw depth data (numpy array)
 └── images1/68.png              # Original RGB image  ```
++
