@@ -199,4 +199,10 @@ Initial IMU→Camera matrix `T_imu_to_camera_init`
 
 Search radius for map points (default 75 m)
 
+<p align="center">
+  <img src="docs/media/ex_lidar.png" alt="SPECTRA system overview" width="660">
+  <br>
+  <em>Figure 5 — The SPECTRA sensor system used for the data aquisition.</em>
+</p>
+
 
