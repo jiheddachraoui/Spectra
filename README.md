@@ -229,9 +229,8 @@ python depth_map_densification.py
 Required files in the same directory
 project_directory/
 
-├── seg_map/seg_map_68.png      # Semantic segmentation (RGB)
 
+***├── seg_map/seg_map_68.png      # Semantic segmentation (RGB)
 ├── res/depth_map_68.png        # Colored depth image (inferno colormap)
-
 ├── res_npy/depth_map_68.npy    # Raw depth data (numpy array)
-└── images1/68.png              # Original RGB image
+└── images1/68.png              # Original RGB image ***
