@@ -234,5 +234,4 @@ project_directory/
 ├── res/depth_map_68.png        # Colored depth image (inferno colormap)
 
 ├── res_npy/depth_map_68.npy    # Raw depth data (numpy array)
-
 └── images1/68.png              # Original RGB image
