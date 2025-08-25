@@ -218,7 +218,11 @@ To run semantic segmentation on a set of images and save the results:
 ```bash
 python src/save_segmentation.py
 ```
-
+<p align="center">
+  <img src="docs/media/ex_seg.png" alt="SPECTRA system overview" width="660">
+  <br>
+  <em>Figure 5 — SEmantic Segmentation Masks .</em>
+</p>
 
 ## Step 6  Depth Map Densification using Semantic Segmentation
 
@@ -242,4 +246,9 @@ project_directory/
 ├── res/depth_map_68.png        # Colored depth image (inferno colormap)
 ├── res_npy/depth_map_68.npy    # Raw depth data (numpy array)
 └── images1/68.png              # Original RGB image  ```
-+
+
+<p align="center">
+  <img src="docs/media/ex_smooth.png" alt="SPECTRA system overview" width="660">
+  <br>
+  <em>Figure 7 — LDEnsified Depth Maps .</em>
+</p>
