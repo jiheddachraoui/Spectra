@@ -206,3 +206,29 @@ Search radius for map points (default 75 m)
 </p>
 
 
+## Step 5 — Semantic Segmentation
+
+IN our SPECTRA Dataset, we consider semantic segmentation as a double 
+
+
+## Step 6  Depth Map Densification using Semantic Segmentation
+
+A Python implementation for densifying sparse LiDAR depth maps using semantic segmentation guidance.
+
+
+The system uses a **semantic-aware pipeline** that combines:
+- **Occlusion filtering**: Removes outlier depth points using dual-zone processing (near/far objects)
+- **Semantic-guided KNN filling**: Fills missing depth values within semantic classes (vehicles, roads, buildings, etc.)
+- **Segmentation-guided smoothing**: Applies smoothing while preserving object boundaries
+
+
+```bash
+python depth_map_densification.py
+
+```
+Required files in the same directory
+project_directory/
+├── seg_map/seg_map_68.png      # Semantic segmentation (RGB)
+├── res/depth_map_68.png        # Colored depth image (inferno colormap)
+├── res_npy/depth_map_68.npy    # Raw depth data (numpy array)
+└── images1/68.png              # Original RGB image
