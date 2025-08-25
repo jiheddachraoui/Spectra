@@ -210,7 +210,15 @@ Search radius for map points (default 75 m)
 
 IN our SPECTRA Dataset, we consider semantic segmentation as a double usage annotation, that can be used to train models on **semantic segmentation using event data**, but it is also used to generate **pseudo ground truths** for learning-models in depth estimation, bu creating dense depth maps and label-aware diffusion of Lidar data. 
 
-We implemented a version of **DeeplabV3+** trained and finetuned on the CityScapes Dataset. 
+We implemented a version of **[DeepLabV3+ checkpoint (Google Drive)](https://drive.google.com/file/d/1La2oCvuufKtBQ4Ot_Xsl04wbIiocabLb/view?usp=sharing)** trained and finetuned on the CityScapes Dataset. 
+
+
+To run semantic segmentation on a set of images and save the results:
+
+```bash
+python src/save_segmentation.py
+```
+
 
 ## Step 6  Depth Map Densification using Semantic Segmentation
 
