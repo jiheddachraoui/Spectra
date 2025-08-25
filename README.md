@@ -250,5 +250,5 @@ project_directory/
 <p align="center">
   <img src="docs/media/ex_smooth.png" alt="SPECTRA system overview" width="660">
   <br>
-  <em>Figure 7 — LDEnsified Depth Maps .</em>
+  <em>Figure 7 — Densified Depth Maps .</em>
 </p>
