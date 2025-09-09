@@ -17,6 +17,7 @@ result = inference_model(model, img_path)
 
 # Get visualization result (as ndarray, not shown in matplotlib)
 vis_image = show_result_pyplot(model, img_path, result, opacity=0.99, out_file=None,with_labels=False)
+vis_image = cv2.cvtColor(vis_image, cv2.COLOR_RGB2BGR)
 
 # Read original image
 original_image = cv2.imread(img_path)
