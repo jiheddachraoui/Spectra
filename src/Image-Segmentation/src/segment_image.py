@@ -15,6 +15,7 @@ def generate_segmentated_img(img_path):
     # test a single image and show the results
     result = inference_model(model, img_path)
     vis_image = show_result_pyplot(model, img_path, result,opacity=1,show=False,with_labels=False)
+    vis_image = cv2.cvtColor(vis_image, cv2.COLOR_RGB2BGR)
     #print(vis_image.shape)
     return vis_image
 
