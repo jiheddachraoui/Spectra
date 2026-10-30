@@ -361,6 +361,9 @@ rosbag play raw/<id>.bag                         # terminal 1
 roslaunch faster_lio mapping_ouster32.launch     # terminal 2: writes scans.pcd and the trajectory
 ```
 
+<p align="center"><img src="docs/media/lidar_maps.png" alt="Faster-LIO LiDAR maps of SPECTRA drives" width="560"></p>
+<p align="center"><sub>LiDAR maps built with Faster-LIO from SPECTRA drives.</sub></p>
+
 <details>
 <summary><b>Bag topics</b></summary>
 
@@ -398,7 +401,7 @@ Short version; the full list, with the affected sequences, is in **[docs/DATA_NO
 | [`toolkit/`](toolkit/README.md) | **the tools for users of the dataset** |
 | [`docs/`](docs) | data notes and figures |
 | [`scripts/`](scripts/README.md) | the original processing scripts, kept for reference |
-| [`src/`](src) | the ROS drivers and Faster-LIO used for recording and mapping |
+| [`src/`](src/README.md) | the event-camera ROS driver, Faster-LIO and the segmentation code used for recording and labelling |
 
 ## Citation
 
