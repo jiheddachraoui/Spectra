@@ -89,7 +89,7 @@ guessed (1,739 of 31,031, listed in `depth/frames.csv`).
 
 The semantic labels are made on the left camera. To work on the right camera, use the **disparity**
 (`depth/disparity/<stem>.png`, 16-bit, **pixels = value / 64**, 0 = none): a pixel (x, y) of the rectified left
-image is seen at (x − disparity, y) in the rectified right image. The [toolkit](../toolkit/README.md#right-camera-labels)
+image is seen at (x − disparity, y) in the rectified right image. The [toolkit](../toolkit/README.md#3-recipes)
 turns any left label map into a complete right label map with this geometry.
 
 <p align="center"><img src="media/right_labels.jpg" alt="Right-camera labels made from the left labels and the disparity" width="900"></p>
