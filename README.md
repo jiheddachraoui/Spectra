@@ -1,7 +1,6 @@
 <p align="center">
-  <a href="docs/media/spectra_teaser.mp4">
-    <img src="docs/media/spectra_teaser_poster.jpg" alt="SPECTRA teaser: click to play the video" width="900">
-  </a>
+  <img src="docs/media/spectra_teaser.gif" alt="SPECTRA teaser: RGB and event cameras in day, dawn, night and tunnel scenes" width="720"><br>
+  <sub><a href="docs/media/spectra_teaser.mp4">Watch in full quality (MP4)</a></sub>
 </p>
 
 <h1 align="center">SPECTRA</h1>
