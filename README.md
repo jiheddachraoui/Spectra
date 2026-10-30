@@ -14,6 +14,7 @@
   <a href="#download"><img src="https://img.shields.io/badge/data-link%20at%20publication-e5484d?style=flat-square" alt="Data"></a>
   <a href="toolkit/README.md"><img src="https://img.shields.io/badge/toolkit-python%203.8%2B-3d6cf5?style=flat-square" alt="Toolkit"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/code-BSD--3--Clause-434b5a?style=flat-square" alt="Code license"></a>
+  <a href="https://anr.fr/Project-ANR-21-CE22-0006"><img src="https://img.shields.io/badge/ANR-CERBERE%20%C2%B7%20ANR--21--CE22--0006-0b5394?style=flat-square" alt="ANR CERBERE project"></a>
 </p>
 
 <p align="center">
@@ -31,7 +32,9 @@
 **SPECTRA** is a multi-sensor driving dataset that pairs **stereo event cameras** with **stereo RGB cameras**, a
 **32-beam LiDAR** and an **RTK-aided INS**, with **dense pseudo ground-truth depth**, **disparity** and **semantic
 segmentation**. It was recorded from a roof-mounted rig in day, dawn, night, urban, suburban and tunnel conditions
-by the LITIS laboratory (Normandie Université / INSA Rouen).
+by the LITIS laboratory (Normandie Université / INSA Rouen), within the
+**[ANR CERBERE project](https://litis-cerbere.univ-rouen.fr/)** on event cameras for the perception of autonomous
+vehicles.
 
 ## News
 
@@ -416,7 +419,9 @@ announced with the release.
 
 ## Acknowledgements
 
-This work was funded by Région Normandie. Computing resources were provided by CRIANN (Normandy, France).
+This work was supported by the French National Research Agency (ANR) through the
+**[CERBERE project](https://anr.fr/Project-ANR-21-CE22-0006)** (ANR-21-CE22-0006), and funded by Région Normandie.
+Computing resources were provided by CRIANN (Normandy, France).
 
 ## Contact
 
