@@ -1,0 +1,8 @@
+numpy
+opencv-python
+pillow
+pyyaml
+h5py
+hdf5plugin
+# scripts/raw_bag.py also needs the ROS 1 package `rosbag` (ROS Noetic, or
+# pip install --extra-index-url https://rospypi.github.io/simple rosbag)
