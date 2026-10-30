@@ -1,13 +1,26 @@
 # SPECTRA toolkit
 
-Python tools for the **SPECTRA** dataset: read a sequence, draw depth on the images, render the event streams,
-make **full semantic labels for the right camera**, and extract data from the raw ROS bags.
+A small set of Python tools that make the **SPECTRA** dataset easy to use. With them you can open a sequence in a
+few lines, see the depth on top of the images, turn events into a video, get labels for the right camera, and
+pull data out of the original recordings.
 
-Tested with Python 3.8 and 3.11.
+## Install
+
+You need Python 3.8 or newer (tested with 3.8 and 3.11).
 
 ```bash
+cd toolkit
 pip install -r requirements.txt          # numpy, opencv-python, pillow, pyyaml, h5py, hdf5plugin
 ```
+
+## Try it
+
+```bash
+python scripts/quickstart_read.py --root /path/to/SPECTRA --seq 2024-10-24-08-15-20   # what one frame holds
+python scripts/show_depth.py      --root /path/to/SPECTRA --seq 2024-10-24-08-15-20 --out depth.mp4   # depth over the images
+```
+
+## The tools
 
 | Script | What it does | Works on |
 |---|---|---|
