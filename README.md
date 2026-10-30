@@ -220,11 +220,11 @@ cd toolkit && pip install -r requirements.txt
 
 | Script | What it does |
 |---|---|
-| `scripts/quickstart_read.py` | opens one sequence and prints what a stereo frame holds |
-| `scripts/show_depth.py` | dense depth drawn on the rectified left image (PNG or MP4) |
-| `scripts/render_events.py` | event stream rendered as a video |
-| `scripts/label_right.py` | full semantic labels for the right RGB camera, from the left labels |
-| `scripts/raw_bag.py` | images, events, trigger, LiDAR scans and GNSS from a raw bag (same files as the release) |
+| `toolkit/scripts/quickstart_read.py` | opens one sequence and prints what a stereo frame holds |
+| `toolkit/scripts/show_depth.py` | dense depth drawn on the rectified left image (PNG or MP4) |
+| `toolkit/scripts/render_events.py` | event stream rendered as a video |
+| `toolkit/scripts/label_right.py` | full semantic labels for the right RGB camera, from the left labels |
+| `toolkit/scripts/raw_bag.py` | images, events, trigger, LiDAR scans and GNSS from a raw bag (same files as the release) |
 
 ```python
 import spectra as sp
@@ -353,8 +353,9 @@ python toolkit/scripts/raw_bag.py events  raw/<id>.bag --side left --out events/
 python toolkit/scripts/raw_bag.py trigger raw/<id>.bag --out events/trigger.txt
 ```
 
-The LiDAR map and trajectory (`lidar_ins/`) come from **Faster-LIO**, included in [`src/faster-lio`](src/faster-lio):
-build it in a catkin workspace, then
+The LiDAR map and trajectory (`lidar_ins/`) come from [**Faster-LIO**](https://github.com/gaoxiang12/faster-lio).
+Build it in a catkin workspace, copy the SPECTRA settings from [`toolkit/faster_lio/`](toolkit/faster_lio) into its
+`config/` and `launch/` folders, then
 
 ```bash
 rosbag play raw/<id>.bag                         # terminal 1
@@ -398,10 +399,8 @@ Short version; the full list, with the affected sequences, is in **[docs/DATA_NO
 
 | Folder | Content |
 |---|---|
-| [`toolkit/`](toolkit/README.md) | **the tools for users of the dataset** |
+| [`toolkit/`](toolkit/README.md) | **the tools for users of the dataset**: Python readers, viewers, right-camera labels, raw-bag extraction, Faster-LIO settings |
 | [`docs/`](docs) | data notes and figures |
-| [`scripts/`](scripts/README.md) | the original processing scripts, kept for reference |
-| [`src/`](src/README.md) | the event-camera ROS driver, Faster-LIO and the segmentation code used for recording and labelling |
 
 ## Citation
 

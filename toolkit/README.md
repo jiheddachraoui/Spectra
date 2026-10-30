@@ -129,13 +129,27 @@ in nanoseconds. The camera and INS message packages are not needed, only `rosbag
 | `/ixblue_ins_driver/standard/timereference` | INS time reference (2025 bags only) |
 | `/synchrobox_msg`, `/synchrobox_pin0` | trigger box messages |
 
+## LiDAR maps (Faster-LIO)
+
+`lidar_ins/scans.pcd` and `lidar_ins/traj.txt` were made with [Faster-LIO](https://github.com/gaoxiang12/faster-lio)
+(ROS 1). [`faster_lio/`](faster_lio) holds the settings used for SPECTRA: copy `ouster32.yaml` into Faster-LIO's
+`config/` and `mapping_ouster32.launch` into its `launch/`, build it in a catkin workspace, then
+
+```bash
+rosbag play raw/<id>.bag                         # terminal 1
+roslaunch faster_lio mapping_ouster32.launch     # terminal 2
+```
+
 ## Package layout
 
 ```
-spectra/
-├── dataset.py         Sequence: paths and readers of the release tree
-├── rectify.py         StereoRig: raw <-> rectified images and labels, depth -> disparity
-├── semantic.py        classes, colours <-> class ids
-├── events.py          EventFile (time windows of an event file), render
-└── stereo_labels.py   label_right: full right-camera labels
+toolkit/
+├── spectra/
+│   ├── dataset.py         Sequence: paths and readers of the release tree
+│   ├── rectify.py         StereoRig: raw <-> rectified images and labels, depth -> disparity
+│   ├── semantic.py        classes, colours <-> class ids
+│   ├── events.py          EventFile (time windows of an event file), render
+│   └── stereo_labels.py   label_right: full right-camera labels
+├── scripts/               the command-line tools above
+└── faster_lio/            Faster-LIO settings for the Ouster OS1-32 and the iXblue IMU
 ```

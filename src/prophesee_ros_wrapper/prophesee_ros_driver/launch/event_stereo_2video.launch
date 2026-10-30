@@ -1,4 +1,0 @@
-<launch>
-  <rosparam command="load" file="$(find prophesee_ros_driver)/cfg/event_stereo_frame.yaml"/>
-  <node pkg="prophesee_ros_driver" type="event_visualizer_custom" name="event_stereo_2video" output="screen"/>
-</launch>
