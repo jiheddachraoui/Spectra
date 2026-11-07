@@ -135,6 +135,76 @@ depth = seq.depth(pair["stem"])       # depth in metres
 The toolkit can also draw depth on the images, turn events into videos, make labels for the right camera and
 extract data from the raw recordings. See the **[toolkit guide](toolkit/README.md)**.
 
+## Reading the events
+
+Each sequence has `events/left.h5` (left event camera, `cam2`), `events/right.h5` (right event camera, `cam3`)
+and `events/trigger.txt`. The HDF5 files follow the [DSEC](https://dsec.ifi.uzh.ch/) layout:
+
+| Dataset | Type | Meaning |
+|---|---|---|
+| `events/x` | uint16 | column, 0 to 1279 |
+| `events/y` | uint16 | row, 0 to 719 |
+| `events/p` | uint8 | polarity: 1 = ON (brightness up), 0 = OFF (brightness down) |
+| `events/t` | uint32 | time in µs after `t_offset`, sorted |
+| `t_offset` | int64, shape (1,) | start of the file, µs since the Unix epoch (UTC) |
+| `ms_to_idx` | uint64 | `ms_to_idx[k]` = index of the first event with `t >= 1000·k` µs |
+
+What to know before you read them:
+
+- **Absolute time = `t_offset + t`**, in µs since the Unix epoch, the same time base as the ROS stamps of the raw
+  bag (LiDAR, INS). The left and right files each have their own `t_offset`, so compare absolute times only.
+- **`import hdf5plugin` first.** The files use the Zstandard HDF5 filter; without it h5py fails with
+  `can't find plugin`.
+- **Read by time window.** A file holds up to 1.4 billion events: slice it with `ms_to_idx`, never load it whole.
+- **Pixels are raw (distorted).** Intrinsics, distortion and extrinsics of `event_left` and `event_right` are in
+  `calib.yaml`.
+- **Trigger.** `events/trigger.txt` has one edge per line, in **ns** since the Unix epoch (divide by 1000 to compare
+  with event times), two edges per RGB exposure.
+
+With the toolkit:
+
+```python
+import spectra as sp
+
+seq  = sp.Sequence("SPECTRA", "2024-11-28-18-25-59")
+pair = seq.pairs[len(seq.pairs) // 2]
+t    = int(pair["t_left_ns"]) // 1000                      # RGB stamp, ns -> µs
+
+with seq.events("left") as ev:                              # or "right"
+    e = ev.window(t - 10_000, t + 10_000)                   # 20 ms around the image
+x, y, p, t_us = e["x"], e["y"], e["p"], e["t"]              # t_us: absolute time (µs)
+picture = sp.render(e)                                      # event frame, BGR
+edges_ns = seq.trigger_ns()                                 # trigger edges (ns)
+```
+
+With plain h5py:
+
+```python
+# pip install numpy h5py hdf5plugin
+import h5py, hdf5plugin, numpy as np
+
+def read_events(path, t0_us, t1_us):
+    """Events with t0_us <= t < t1_us, t in absolute Unix time (µs)."""
+    with h5py.File(path, "r") as f:
+        off = int(f["t_offset"][0])
+        ms, n = f["ms_to_idx"], f["events/t"].shape[0]
+        k0 = (t0_us - off) // 1000                       # first millisecond needed
+        k1 = -(-(t1_us - off) // 1000)                   # last one, rounded up
+        idx = lambda k: 0 if k < 0 else (n if k >= len(ms) else int(ms[k]))
+        i0, i1 = idx(k0), idx(k1)
+        x, y, p, t = (f["events"][k][i0:i1] for k in ("x", "y", "p", "t"))
+    t = t.astype(np.int64) + off                         # absolute time = t_offset + t
+    keep = (t >= t0_us) & (t < t1_us)
+    return x[keep], y[keep], p[keep], t[keep]
+
+x, y, p, t = read_events("SPECTRA/sequences/2024-11-28-18-25-59/events/left.h5", t0_us, t0_us + 20_000)
+frame = np.zeros((720, 1280), np.int32)
+np.add.at(frame, (y, x), np.where(p == 1, 1, -1))       # signed event count per pixel
+```
+
+To bring a LiDAR point into the left event camera: `p_event = inv(T_rgb_left_event_left) · T_rgb_left_lidar · p_lidar`,
+then the `event_left` camera model of `calib.yaml`. More in **[docs/DATA_FORMAT.md](docs/DATA_FORMAT.md)**.
+
 ## Download
 
 The data will be available from the project page (link at publication). You can download **one archive per

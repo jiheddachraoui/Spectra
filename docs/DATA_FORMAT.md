@@ -38,8 +38,8 @@ recording name (`dawn_01`, `day_suburbs`, ...) is kept in `sequences.csv`, colum
 |---|---|---|
 | `rgb/*/*.png` | PNG, 1280×720 | raw (distorted) images; intrinsics in `calib.yaml` |
 | `semantic/*/*.png` | PNG | Cityscapes palette colours, on the raw image |
-| `events/left.h5`, `right.h5` | HDF5 | datasets `events/x`, `events/y`, `events/p`, `events/t`, `ms_to_idx`, `t_offset`. `t` is in µs after `t_offset`; `ms_to_idx[k]` is the index of the first event of millisecond `k`. You may need `pip install hdf5plugin` |
-| `events/trigger.txt` | text | one trigger edge per line (ns), two edges per RGB exposure |
+| `events/left.h5`, `right.h5` | HDF5 | datasets `events/x` (uint16, 0–1279), `events/y` (uint16, 0–719), `events/p` (uint8, 1 = ON, 0 = OFF), `events/t` (uint32, µs after `t_offset`, sorted), `t_offset` (int64, µs since the Unix epoch), `ms_to_idx` (uint64, `ms_to_idx[k]` = index of the first event with `t >= 1000·k`). Zstandard-compressed: `import hdf5plugin` before reading. See [Reading the events](../README.md#reading-the-events) |
+| `events/trigger.txt` | text | one trigger edge per line, ns since the Unix epoch, two edges per RGB exposure |
 | `lidar_ins/scans.pcd` | PCD | the accumulated LiDAR map, in the map frame |
 | `lidar_ins/traj.txt` | text, 8 columns | `# timestamp x y z q_x q_y q_z q_w`: the IMU pose in the map frame, timestamp in seconds |
 | `depth/dense/*.png`, `depth/sparse/*.png` | PNG, 16 bit | metres = value / 256, 0 = no depth |
