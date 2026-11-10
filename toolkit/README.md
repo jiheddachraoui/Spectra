@@ -13,8 +13,8 @@ are stored: the toolkit finds and reads them for you.
 You need **Python 3.8 or newer**. In a terminal:
 
 ```bash
-git clone https://github.com/jiheddachraoui/Cerbere.git
-cd Cerbere/toolkit
+git clone https://github.com/jiheddachraoui/SPECTRA.git
+cd SPECTRA/toolkit
 pip install -r requirements.txt
 ```
 

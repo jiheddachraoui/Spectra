@@ -109,8 +109,8 @@ Each sequence is named after the time it was recorded, `YYYY-MM-DD-HH-MM-SS`.
 **2. Install the toolkit:**
 
 ```bash
-git clone https://github.com/jiheddachraoui/Cerbere.git
-cd Cerbere/toolkit
+git clone https://github.com/jiheddachraoui/SPECTRA.git
+cd SPECTRA/toolkit
 pip install -r requirements.txt
 ```
 
@@ -268,5 +268,5 @@ Computing resources were provided by CRIANN (Normandy, France).
 
 ## Contact
 
-Questions about the data or the toolkit? Please [open an issue](https://github.com/jiheddachraoui/Cerbere/issues).
+Questions about the data or the toolkit? Please [open an issue](https://github.com/jiheddachraoui/SPECTRA/issues).
 If you appear in the data and want an image removed, open an issue as well and we will get in touch.
