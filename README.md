@@ -151,15 +151,15 @@ and `events/trigger.txt`. The HDF5 files follow the [DSEC](https://dsec.ifi.uzh.
 
 What to know before you read them:
 
-- **Absolute time = `t_offset + t`**, in µs since the Unix epoch, the same time base as the ROS stamps of the raw
-  bag (LiDAR, INS). The left and right files each have their own `t_offset`, so compare absolute times only.
+- **Absolute time = `t_offset + t`**, in µs since the Unix epoch. The left and right files each have their own
+  `t_offset`, so compare absolute times only.
 - **`import hdf5plugin` first.** The files use the Zstandard HDF5 filter; without it h5py fails with
   `can't find plugin`.
 - **Read by time window.** A file holds up to 1.4 billion events: slice it with `ms_to_idx`, never load it whole.
 - **Pixels are raw (distorted).** Intrinsics, distortion and extrinsics of `event_left` and `event_right` are in
   `calib.yaml`.
 - **Trigger.** `events/trigger.txt` has one edge per line, in **ns** since the Unix epoch (divide by 1000 to compare
-  with event times), two edges per RGB exposure.
+  with event times), two edges per 50 ms cycle.
 
 With the toolkit:
 

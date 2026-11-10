@@ -40,7 +40,7 @@ if disp is not None:
     print(f"  disparity: {disp[disp > 0].min():.1f} to {disp.max():.1f} px")
 
 with seq.events("left") as ev:
-    t0 = int(pair["t_left_ns"]) // 1000                               # µs, same clock family as the RGB stamps
+    t0 = int(pair["t_left_ns"]) // 1000                               # RGB stamp, ns -> µs
     win = ev.window(t0 - 25_000, t0 + 25_000)                         # 50 ms around the left exposure
     print(f"  events: {win['t'].size} left events in the 50 ms around this frame "
           f"(file covers {(ev.t_end_us - ev.t_start_us) / 1e6:.1f} s)")

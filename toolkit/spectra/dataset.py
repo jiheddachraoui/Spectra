@@ -100,7 +100,7 @@ class Sequence:
         return EventFile(self.dir / "events" / f"{side}.h5")
 
     def trigger_ns(self) -> np.ndarray:
-        """Trigger edges of the left event camera (ns), two per RGB exposure."""
+        """Trigger edges of the left event camera (ns), two per 50 ms cycle."""
         return np.loadtxt(self.dir / "events" / "trigger.txt", dtype=np.int64, ndmin=1)
 
     def trajectory(self) -> np.ndarray:

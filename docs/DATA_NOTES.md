@@ -10,7 +10,7 @@ name is in brackets (`sequences.csv`, column `recording_name`).
 - In 2024 the left and right frames were taken together (within 0.4 ms). In the 2025-07-22 session the right
   camera exposes **3.6 ms to 22 ms after the left**, growing through the session. `pairs.csv` gives each pair and
   both timestamps.
-- The event-camera trigger is **GPS-aligned** and records two edges per RGB exposure (`events/trigger.txt`).
+- The event-camera trigger is **GPS-aligned** and records two edges per 50 ms cycle (`events/trigger.txt`).
 - The event time is `t_offset + t` (µs).
 - A mapping of the RGB, event, LiDAR and INS clocks to one time axis is not part of this release. Event, PC, LiDAR
   and INS clocks are not mapped to one another beyond what the bag stamps give.
